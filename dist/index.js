@@ -17,6 +17,7 @@ const HALF_RAD = Math.PI/2
 export default class AnimateNumber extends Component {
 
   props : {
+    initialValue?: ?number;
     countBy? : ?number,
     interval? : ?number,
     steps? : ?number,
@@ -77,8 +78,8 @@ export default class AnimateNumber extends Component {
     super(props);
     // default values of state and non-state variables
     this.state = {
-      value : 0,
-      displayValue : 0
+      value : props.initialValue ? props.initialValue : 0,
+      displayValue : props.initialValue ? props.initialValue : 0
     }
     this.dirty = false;
     this.startFrom = 0;

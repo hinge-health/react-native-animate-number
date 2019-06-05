@@ -1,8 +1,3 @@
-/**
- * @author wkh237
- * @version 0.1.1
- */
-
 // @flow
 
 import React, { Component } from 'react';
@@ -17,6 +12,7 @@ const HALF_RAD = Math.PI/2
 export default class AnimateNumber extends Component {
 
   props : {
+    testID?: ?string;
     initialValue?: ?number;
     countBy? : ?number,
     interval? : ?number,

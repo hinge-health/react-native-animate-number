@@ -5,7 +5,6 @@ import {
   Text,
   View
 } from 'react-native';
-import Timer from 'react-timer-mixin';
 
 const HALF_RAD = Math.PI/2
 
@@ -70,6 +69,8 @@ export default class AnimateNumber extends Component {
    */
   endWith : number;
 
+  unmounted: bool;
+
   constructor(props:any) {
     super(props);
     // default values of state and non-state variables
@@ -80,6 +81,8 @@ export default class AnimateNumber extends Component {
     this.dirty = false;
     this.startFrom = 0;
     this.endWith = 0;
+    this.timer = null;
+    this.unmounted = false;
   }
 
   componentDidMount() {
@@ -87,6 +90,11 @@ export default class AnimateNumber extends Component {
     this.endWith = this.props.value
     this.dirty = true
     this.startAnimate()
+  }
+
+  componentWillUnmount() {
+    this.unmounted = true;
+    clearInterval(this.timer);
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -127,7 +135,8 @@ export default class AnimateNumber extends Component {
 
     let progress = this.getAnimationProgress()
 
-    Timer.setTimeout(() => {
+    this.timer = setTimeout(() => {
+      if (this.unmounted) return;
 
       let value = (this.endWith - this.startFrom)/this.props.steps
       let sign = value >= 0 ? 1 : -1
